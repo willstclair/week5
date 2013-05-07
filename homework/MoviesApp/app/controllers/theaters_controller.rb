@@ -1,15 +1,21 @@
 class TheatersController < ApplicationController
 
-  def index
-    @theaters = Theater.all
+  def destroy
+    n = Theater.find_by_id(params[:id])
+    n.destroy
+    redirect_to "/theaters"
   end
 
-  def show
+  def edit
     @theater = Theater.find_by_id(params[:id])
   end
 
-  def new
-    @theater = Theater.new
+  def update
+    @theater = Theater.find_by_id(params[:id])
+    @theater.name = params[:name]
+    @theater.address = params[:address]
+    @theater.save
+    redirect_to "/theaters"
   end
 
   def create
@@ -24,22 +30,16 @@ class TheatersController < ApplicationController
     end
   end
 
-  def edit
-    @theater = Theater.find_by_id(params[:movie_id])
+  def index
+    @theaters = Theater.all
   end
 
-  def update
+  def show
     @theater = Theater.find_by_id(params[:id])
-
-    if @theater.save
-      redirect_to "/theaters"
-    else
-      render 'edit'
-    end
   end
 
-  def destroy
-    @theater = Theater.find_by_id(params[:id])
-    redirect_to "/theaters"
+  def new
+    @theater = Theater.new
   end
+
 end
